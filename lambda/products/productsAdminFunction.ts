@@ -10,37 +10,40 @@ export async function handler(event: APIGatewayProxyEvent, context: Context): Pr
     console.log(`API Gateway Request id: ${apiRequestId} - Lambda RequestId: ${lambdaRequestId}`)
 
     if (event.resource === "/products") {
-        if (method === "GET") {
-            console.log('GET')
+        console.log("POST /products")
 
-            return {
-                statusCode: 200,
-                body: JSON.stringify({
-                    message: "GET Products - OK"
-                })
-            }
+        return {
+            statusCode: 201,
+            body: "POST /products"
         }
     }
 
     if (event.resource === "/products/{id}") {
         const productId = event.pathParameters!.id as string
-        console.log(`GET /products/${productId}`)
-        return {
-            statusCode: 200,
-            body: JSON.stringify({
-                message: `GET /products/${productId}`
-            })
+
+        if (event.httpMethod === "PUT") {
+
+            console.log(`PUT /products/${productId}`)
+
+            return {
+                statusCode: 200,
+                body: `PUT /products/${productId}`
+            }
+        }
+
+        if (event.httpMethod === "DELETE") {
+
+            console.log(`DELETE /products/${productId}`)
+            return {
+                statusCode: 200,
+                body: `DELETE /products/${productId}`
+            }
         }
 
     }
 
-
-
     return {
         statusCode: 400,
-        body: JSON.stringify({
-            message: "Bad Request"
-        })
+        body: "Bad request"
     }
-
 }
