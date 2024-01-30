@@ -78,16 +78,14 @@ export class ProductRepository {
             UpdateExpression: "set productName = :n, code = :c, price = :p, model = :m, productUrl = :u",
             ExpressionAttributeValues: {
                 ":n": product.productName,
-                ":c:": product.code,
+                ":c": product.code,
                 ":p": product.price,
                 ":m": product.model,
                 ":u": product.productUrl
             }
         }).promise()
-
         data.Attributes!.id = productId
         return data.Attributes as Product
-
     }
 
 }
